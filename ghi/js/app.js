@@ -1,12 +1,14 @@
 function createCard(name, description, pictureUrl, newStartDate, newEndDate, conferenceLocation) {
     return `
-      <div class="card">
-        <img src="${pictureUrl}" class="card-img-top">
-        <div class="card-body">
-          <h5 class="card-title">${name}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">${conferenceLocation}</h6>
-          <p class="card-text">${description}</p>
-          <div class="card-footer">${newStartDate} - ${newEndDate}</div>
+      <div class="col">
+        <div class="card">
+            <img src="${pictureUrl}" class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">${name}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">${conferenceLocation}</h6>
+                <p class="card-text">${description}</p>
+                <div class="card-footer">${newStartDate} - ${newEndDate}</div>
+            </div>
         </div>
       </div>
     `;
@@ -45,7 +47,7 @@ function createCard(name, description, pictureUrl, newStartDate, newEndDate, con
             let newEndDate = (d2.getMonth()+1) + "/" + d2.getDate() + "/" + d2.getFullYear()
             
             const html = createCard(name, description, pictureUrl, newStartDate, newEndDate, conferenceLocation);
-            const column = document.querySelector('.col');
+            const column = document.querySelector('.row');
             column.innerHTML += html;
 
           }
