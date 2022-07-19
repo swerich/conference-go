@@ -1,9 +1,10 @@
-function createCard(name, description, pictureUrl, newStartDate, newEndDate) {
+function createCard(name, description, pictureUrl, newStartDate, newEndDate, conferenceLocation) {
     return `
       <div class="card">
         <img src="${pictureUrl}" class="card-img-top">
         <div class="card-body">
           <h5 class="card-title">${name}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">${conferenceLocation}</h6>
           <p class="card-text">${description}</p>
           <div class="card-footer">${newStartDate} - ${newEndDate}</div>
         </div>
@@ -32,6 +33,9 @@ function createCard(name, description, pictureUrl, newStartDate, newEndDate) {
             const description = details.conference.description;
             const pictureUrl = details.conference.location.picture_url;
 
+            const conferenceLocation = details.conference.location.name;
+            
+
             const startDate = details.conference.starts;
             let d1 = new Date(startDate)
             let newStartDate = (d1.getMonth()+1) + "/" + d1.getDate() + "/" + d1.getFullYear()
@@ -40,7 +44,7 @@ function createCard(name, description, pictureUrl, newStartDate, newEndDate) {
             let d2 = new Date(endDate)
             let newEndDate = (d2.getMonth()+1) + "/" + d2.getDate() + "/" + d2.getFullYear()
             
-            const html = createCard(name, description, pictureUrl, newStartDate, newEndDate);
+            const html = createCard(name, description, pictureUrl, newStartDate, newEndDate, conferenceLocation);
             const column = document.querySelector('.col');
             column.innerHTML += html;
 
@@ -50,6 +54,10 @@ function createCard(name, description, pictureUrl, newStartDate, newEndDate) {
       }
     } catch (e) {
         console.error(e);
+        `<div class="alert alert-primary" role="alert">
+            An error occured when fetching data!
+        </div>`
+        
       // Figure out what to do if an error is raised
     }
   
