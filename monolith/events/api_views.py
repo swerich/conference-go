@@ -21,7 +21,7 @@ class LocationDetailEncoder(ModelEncoder):
         "created",
         "updated",
         "picture_url",
-        "location",
+        # "location",
     ]
 
     def get_extra_data(self, o):
@@ -162,6 +162,7 @@ def api_list_locations(request):
             encoder=LocationListEncoder,
         )
     else:
+        print('line 165')
         content = json.loads(request.body)
 
         try:
@@ -175,7 +176,10 @@ def api_list_locations(request):
 
         photo = get_photo(content["city"], content["state"].abbreviation)
         content.update(photo)
+        print('we are here')
         location = Location.objects.create(**content)
+        print(location)
+        
         return JsonResponse(
             location,
             encoder=LocationDetailEncoder,
@@ -212,6 +216,7 @@ def api_show_location(request, pk):
         count, _ = Location.objects.filter(id=pk).delete()
         return JsonResponse({"deleted": count > 0})
     else:
+       
         content = json.loads(request.body)
         try:
             if "state" in content:
@@ -223,9 +228,34 @@ def api_show_location(request, pk):
                 status=400,
             )
         Location.objects.filter(id=pk).update(**content)
+        
         location = Location.objects.get(id=pk)
         return JsonResponse(
             location,
             encoder=LocationDetailEncoder,
             safe=False,
         )
+
+
+
+@require_http_methods(["GET"])
+def api_list_states(request):
+    if request.method == "GET":
+        states = State.objects.order_by('name')
+    state_list = []
+    for state in states:
+        state = {"name": state.name,
+                 "abbreviation": state.abbreviation,
+        }
+        state_list.append(state)
+    # Get the states from the database ordered by name
+
+    # Create an empty list named state_list
+
+    # For each state in the states from the database
+        # Create a dictionary that contains the name and
+        # abbreviation for each state
+
+        # Append the dictionary to the list
+
+    return JsonResponse({"states": state_list})
