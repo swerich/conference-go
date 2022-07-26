@@ -241,13 +241,14 @@ def api_show_location(request, pk):
 @require_http_methods(["GET"])
 def api_list_states(request):
     if request.method == "GET":
-        states = State.objects.order_by('name')
-    state_list = []
-    for state in states:
-        state = {"name": state.name,
-                 "abbreviation": state.abbreviation,
-        }
-        state_list.append(state)
+        states = State.objects.order_by('name').values()
+        state_list = []
+        for state in states:
+            d = state; {"name", "abbreviation"}
+            # state = {"name": state.name,
+            #         "abbreviation": state.abbreviation,
+            # }
+            state_list.append(d)
     # Get the states from the database ordered by name
 
     # Create an empty list named state_list

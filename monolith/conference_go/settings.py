@@ -39,10 +39,10 @@ AUTH_USER_MODEL = "accounts.User"
 # Application definition
 
 INSTALLED_APPS = [
+    "corsheaders",
     "accounts.apps.AccountsConfig",
     "events.apps.EventsConfig",
     "presentations.apps.PresentationsConfig",
-    "corsheaders",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -61,8 +61,13 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000", "http://localhost:3001",]
+
+CORS_ALLOW_CREDENTIALS = True 
+
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
+    "http://localhost:3000", "http://localhost:3001",
 ]
 
 ROOT_URLCONF = "conference_go.urls"
